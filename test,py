@@ -1,0 +1,25 @@
+def calculate_interest(deposit_amount, years, interest_rate):
+    total_days = int(years * 365)
+    interest = 0
+
+    if years < 3:
+        # 単利計算
+        interest = deposit_amount * interest_rate * total_days / 365
+    else:
+        # 複利計算
+        half_year_days = [182, 183] * (int(years) // 3)
+        for days in half_year_days:
+            interest += deposit_amount * interest_rate * days / 365
+            deposit_amount += interest
+
+    return int(deposit_amount + interest)
+
+# 入力
+data = input("預入金額 年数 利率(%)を入力してください(スペース区切り)")
+deposit_amount, years, interest_rate = map(float, data.split())
+
+# 利息計算
+received_amount = calculate_interest(deposit_amount, years, interest_rate / 100)
+
+# 出力
+print(received_amount)
